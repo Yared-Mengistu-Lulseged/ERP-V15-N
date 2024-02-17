@@ -6,9 +6,9 @@
 # sejun huang <sejun.huang@gmail.com>, 2021
 # Benson <Benson.Dr@Gmail.com>, 2022
 # 敬雲 林 <chingyun@yuanchih-consult.com>, 2023
-# Wil Odoo, 2023
 # Martin Trigaux, 2023
-# Tony Ng, 2023
+# Wil Odoo, 2023
+# Tony Ng, 2024
 # 
 msgid ""
 msgstr ""
@@ -16,7 +16,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-01-24 09:03+0000\n"
 "PO-Revision-Date: 2021-09-14 12:18+0000\n"
-"Last-Translator: Tony Ng, 2023\n"
+"Last-Translator: Tony Ng, 2024\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2504,43 +2504,43 @@ msgid ""
 "This module is compatible with base_vat module in order to be able to validate VAT numbers for each country that have or not have the possibility to manage multiple identification types.\n"
 msgstr ""
 "\n"
-"Add a new model named \"Identification Type\" that extend the vat field functionality in the partner and let the user to identify (an eventually invoice) to contacts not only with their fiscal tax ID (VAT) but with other types of identifications like national document, passport, foreign ID, etc. With this module installed you will see now in the partner form view two fields:\n"
+"加入「身份識別類型」新模型，它擴展了合作夥伴增值稅欄位的功能，讓用戶不僅可使用他們的財政稅務編號 (VAT)，還可使用其他類型的資料作聯絡人身份識別（及最終用作開立發票給對方），例如國家文件、護照、外國身份證等。安裝此模組後，你現在會在合作夥伴表單檢視中看見兩個欄位：\n"
 "\n"
-"* Identification Type\n"
-"* Identification Number\n"
+"* 識別類型\n"
+"* 識別資料號碼\n"
 "\n"
-"This behavior is a common requirement for some latam countries like Argentina and Chile. If your localization has this requirements then you need to depend on this module and define in your localization module the identifications types that are used in your country. Generally these types of identifications are defined by the government authorities that regulate the fiscal operations. For example:\n"
+"這種行為是一些拉丁美洲國家（如阿根廷和智利）的普遍要求。如果你的本地化工作有此要求，你便需要依賴此模組，並在你的本地化模組中定義你所在國家/地區會使用的身份識別類型。通常，這類的識別方式由監管財政運作的政府當局定義。例如：\n"
 "\n"
-"* AFIP in Argentina defines DNI, CUIT (vat for legal entities), CUIL (vat for natural person), and another 80 valid identification types.\n"
+"* 阿根廷的 AFIP 定義了 DNI、CUIT（法人增值稅）、CUIL（自然人增值稅）和其他 80 種有效身份證明類型。\n"
 "\n"
-"Each identification holds this information:\n"
+"每種識別類型都包含以下資訊：\n"
 "\n"
-"* name: short name of the identification\n"
-"* description: could be the same short name or a long name\n"
-"* country_id: the country where this identification belongs\n"
-"* is_vat: identify this record as the corresponding VAT for the specific country.\n"
-"* sequence: let us to sort the identification types depending on the ones that are most used.\n"
-"* active: we can activate/inactivate identifications to make it easier to our customers\n"
+"* name：識別方式的簡短名稱\n"
+"* description：可以是相同的簡短名稱，或較長的名稱\n"
+"* country_id：識別類型所屬國家/地區\n"
+"* is_vat：標示此識別方式是對應所屬國家/地區的增值稅。\n"
+"* sequence：用作根據常用次序為識別類型排序。\n"
+"* active：可以啟用/停用身份識別類型，方便客戶操作\n"
 "\n"
-"In order to make this module compatible for multi-company environments where we have companies that does not need/support this requirement, we have added generic identification types and generic rules to manage the contact information and make it transparent for the user when only use the VAT as we formerly know.\n"
+"為使這個模組兼容有公司不需要/不支援此要求的多公司環境，我們加入了通用識別類型和通用規則，用作管理聯絡資料，當只使用我們以前知道的增值稅時，使其對用戶透明。\n"
 "\n"
-"Generic Identifications:\n"
+"通用識別方式：\n"
 "\n"
-"* VAT: The Fiscal Tax Identification or VAT number, by default will be selected as identification type so the user will only need to add the related vat number.\n"
-"* Passport\n"
-"* Foreign ID (Foreign National Document)\n"
+"* 增值稅：預設情況下將選擇財政稅務識別編號或增值稅稅務編號作為識別類型，用戶只需加入相關增值稅編號。\n"
+"* 護照\n"
+"* 外國身份證（外國國家文件）\n"
 "\n"
-"Rules when creating a new partner: We will only see the identification types that are meaningful, taking into account these rules:\n"
+"建立新合作夥伴時的規則：考慮到這些規則，我們只會看到有意義的識別類型：\n"
 "\n"
-"* If the partner have not country address set: Will show the generic identification types plus the ones defined in the partner's related company country (If the partner has not specific company then will show the identification types related to the current user company)\n"
+"* 如果合作夥伴沒有設定國家/地區地址：將顯示通用識別類型加上合作夥伴相關公司的國家/地區的識別類型（如果合作夥伴沒有特定公司，則將顯示與目前用戶公司相關的識別類型）\n"
 "\n"
-"* If the partner has country address : will show the generic identification types plus the ones defined for the country of the partner.\n"
+"* 如果合作夥伴有國家/地區地址：將顯示通用識別類型以及合作夥伴所在國家/地區的識別類型。\n"
 "\n"
-"When creating a new company, will set to the related partner always the related country is_vat identification type.\n"
+"建立新公司時，預設會為相關合作夥伴設置相關國家/地區的 is_vat 識別類型。\n"
 "\n"
-"All the defined identification types can be reviewed and activate/deactivate in \"Contacts / Configuration / Identification Type\" menu.\n"
+"所有定義的識別類型都可在“聯絡人/設定/識別類型”選單中查看及啟用/停用。\n"
 "\n"
-"This module is compatible with base_vat module in order to be able to validate VAT numbers for each country that have or not have the possibility to manage multiple identification types.\n"
+"此模組與 base_vat 模組兼容，以便為每個可以或不可以管理多種識別類型的國家/地區，驗證增值稅編號。\n"
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_sale_delivery
@@ -5935,12 +5935,7 @@ msgid ""
 msgstr ""
 "\n"
 "管理休假請求和分配\n"
-"\n"
-"Lead to Tickets\n"
-"===============\n"
-"\n"
-"Link module to map leads to tickets\n"
-"        =====================================\n"
+"=====================================\n"
 "\n"
 "此應用程式控制公司的休假計畫. 它允許員工請求休假. 然後，經理可以審核休假請求，並批准或拒絕這些請求. 這樣，您可以控制公司或部門的整體休假計畫.\n"
 "\n"
@@ -9743,12 +9738,12 @@ msgstr " 在潛在客戶表單檢視上增加一個統計按鈕以存取他們�
 #. module: base
 #: model:ir.module.module,summary:base.module_website_sale_delivery_mondialrelay
 msgid " Let's choose Point Relais® on your ecommerce "
-msgstr ""
+msgstr " 讓我們在你的電子商務中選擇 Point Relais® "
 
 #. module: base
 #: model:ir.module.module,summary:base.module_delivery_mondialrelay
 msgid " Let's choose a Point Relais® as shipping address "
-msgstr " Let's choose a Point Relais® as shipping address "
+msgstr " 讓我們選擇 Point Relais® 作為送貨地址"
 
 #. module: base
 #: model:ir.module.module,description:base.module_sale_purchase_inter_company_rules
@@ -11619,6 +11614,9 @@ msgid ""
 "    notably for selling mouse traps. With that trick he cut\n"
 "    IT budget by almost half within the last 2 years."
 msgstr ""
+"Addison Olson works in IT sector <b>since 10 years</b>. He is known\n"
+"    notably for selling mouse traps. With that trick he cut\n"
+"    IT budget by almost half within the last 2 years."
 
 #. module: base
 #: model:ir.module.module,summary:base.module_l10n_be_hr_payroll_report_measures
@@ -11996,7 +11994,7 @@ msgstr "進行財務整合所需的一切"
 #. module: base
 #: model:ir.module.module,summary:base.module_hr_holidays
 msgid "Allocate PTOs and follow leaves requests"
-msgstr "分配 PTO 並遵循休假請求"
+msgstr "分配有薪假，並追蹤休假申請"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_helpdesk_fsm
@@ -12302,18 +12300,18 @@ msgstr "預約"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_appraisal_skills
 msgid "Appraisal - Skills"
-msgstr "審批 - 技能"
+msgstr "表現評核 - 技能"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_appraisal_survey
 msgid "Appraisal - Survey"
-msgstr "審批 - 問卷"
+msgstr "表現評核 - 問卷"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_human_resources_appraisals
 #: model:ir.module.module,shortdesc:base.module_hr_appraisal
 msgid "Appraisals"
-msgstr "評價"
+msgstr "表現評核"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_human_resources_approvals
@@ -12748,7 +12746,7 @@ msgstr "頭像 512"
 #. module: base
 #: model:ir.model,name:base.model_avatar_mixin
 msgid "Avatar Mixin"
-msgstr ""
+msgstr "頭像混入程式"
 
 #. module: base
 #: model:res.country,name:base.az
@@ -13191,7 +13189,7 @@ msgstr "Belgium - Payroll - December Slip"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_be_hr_payroll_fleet
 msgid "Belgium - Payroll - Fleet"
-msgstr "比利時 - 薪資表 - 車隊管理"
+msgstr "比利時 - 薪酬管理 - 車隊"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_be_hr_payroll_account
@@ -14439,7 +14437,7 @@ msgstr "計算"
 #: code:addons/base/models/ir_model.py:0
 #, python-format
 msgid "Compute method cannot depend on field 'id'"
-msgstr ""
+msgstr "計算方法不能依賴於 id 欄位"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_subscription_taxcloud
@@ -16944,6 +16942,9 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"解析視圖時出錯：\n"
+"\n"
+"%s"
 
 #. module: base
 #: code:addons/base/models/ir_ui_view.py:0
@@ -18129,7 +18130,7 @@ msgstr "法屬圭亞那"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_fr_hr_payroll
 msgid "French Payroll"
-msgstr "法國薪資表"
+msgstr "法國薪酬管理"
 
 #. module: base
 #: model:res.country,name:base.pf
@@ -18746,7 +18747,7 @@ msgstr "海灣合作委員會 (GCC)"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_gcc_pos
 msgid "Gulf Cooperation Council - Point of Sale"
-msgstr ""
+msgstr "Gulf Cooperation Council - Point of Sale"
 
 #. module: base
 #: model:res.country,name:base.gy
@@ -19032,7 +19033,7 @@ msgstr ""
 #. module: base
 #: model:ir.module.category,description:base.module_category_human_resources_payroll
 msgid "Helps you manage your payrolls."
-msgstr "幫您管理您的薪資表."
+msgstr "幫助你管理薪酬。"
 
 #. module: base
 #: model:ir.module.category,description:base.module_category_services_project
@@ -19341,7 +19342,7 @@ msgstr "IM 總線"
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.ir_profile_view_form
 msgid "IR Profile"
-msgstr ""
+msgstr "投資者關係簡介"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_base_language_import__code
@@ -19829,7 +19830,7 @@ msgstr "印度 - 庫存報表 (GST)"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_in_hr_payroll
 msgid "Indian Payroll"
-msgstr "印度薪資表"
+msgstr "印度薪酬管理"
 
 #. module: base
 #: model:ir.model.fields.selection,name:base.selection__res_partner__company_type__person
@@ -19844,7 +19845,7 @@ msgstr "個人"
 #. module: base
 #: model:res.country,name:base.id
 msgid "Indonesia"
-msgstr "印度尼西亞"
+msgstr "印尼"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_id_efaktur
@@ -20170,13 +20171,13 @@ msgstr "無效的「分組」參數"
 #: code:addons/template_inheritance.py:0
 #, python-format
 msgid "Invalid Expression while parsing xpath %r"
-msgstr ""
+msgstr "解析 xpath 時出現無效表達式 %r"
 
 #. module: base
 #: code:addons/base/models/ir_default.py:0
 #, python-format
 msgid "Invalid JSON format in Default Value field."
-msgstr ""
+msgstr "預設值字段中的 JSON 格式無效。"
 
 #. module: base
 #: code:addons/models.py:0
@@ -20390,7 +20391,7 @@ msgstr "用於餐廳的 IoT"
 #. module: base
 #: model:ir.actions.act_window,name:base.action_menu_ir_profile
 msgid "Ir profile"
-msgstr ""
+msgstr "IR簡介"
 
 #. module: base
 #: model:res.country,name:base.ir
@@ -20666,7 +20667,7 @@ msgstr "LGPL 第3版"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_lt_reports
 msgid "Lithuania - Accounting Reports"
-msgstr ""
+msgstr "Lithuania - Accounting Reports"
 
 #. module: base
 #: code:addons/base/models/ir_ui_view.py:0
@@ -21833,7 +21834,7 @@ msgstr "管理您的文件以簽署合約"
 #. module: base
 #: model:ir.module.module,summary:base.module_hr_payroll
 msgid "Manage your employee payroll records"
-msgstr "管理您的員工薪資表記錄"
+msgstr "管理你的員工薪酬記錄"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_planning
@@ -22141,12 +22142,12 @@ msgstr "墨西哥——會計"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_mx_edi_stock
 msgid "Mexico - Electronic Delivery Guide"
-msgstr ""
+msgstr "Mexico - Electronic Delivery Guide"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_mx_edi_stock_extended
 msgid "Mexico - Electronic Delivery Guide Comex"
-msgstr ""
+msgstr "Mexico - Electronic Delivery Guide Comex"
 
 #. module: base
 #: model:res.country,name:base.fm
@@ -26231,12 +26232,12 @@ msgstr "巴基斯坦"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_pk
 msgid "Pakistan - Accounting"
-msgstr ""
+msgstr "Pakistan - Accounting"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_pk_reports
 msgid "Pakistan - Accounting Reports"
-msgstr ""
+msgstr "Pakistan - Accounting Reports"
 
 #. module: base
 #: model:res.country,name:base.pw
@@ -26577,12 +26578,12 @@ msgstr "Paypal收款方"
 #: model:ir.module.category,name:base.module_category_human_resources_payroll
 #: model:ir.module.module,shortdesc:base.module_hr_payroll
 msgid "Payroll"
-msgstr "薪資表"
+msgstr "薪酬管理"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_payroll_account
 msgid "Payroll Accounting"
-msgstr "薪資表會計"
+msgstr "薪酬管理會計"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_payroll_localization
@@ -28670,47 +28671,47 @@ msgstr "聖文森特和格林納丁斯群島"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_contract_salary
 msgid "Salary Configurator"
-msgstr "薪資設定器"
+msgstr "薪酬配置工具"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_be_hr_contract_salary
 msgid "Salary Configurator (Belgium)"
-msgstr "薪資設定(比利時)"
+msgstr "薪酬配置工具（比利時）"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_be_hr_payroll_canteen
 msgid "Salary Configurator (Belgium) - Canteen Cost"
-msgstr "Salary Configurator (Belgium) - Canteen Cost"
+msgstr "薪酬配置工具（比利時）－ 食堂成本"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_be_hr_contract_salary_group_insurance
 msgid "Salary Configurator (Belgium) - Group Insurance"
-msgstr "薪資設定(比利時) - 團體保險"
+msgstr "薪酬配置工具（比利時）－ 團體保險"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_contract_salary_holidays
 msgid "Salary Configurator - Holidays"
-msgstr "薪資設定 - 假期"
+msgstr "薪酬配置工具 － 假期"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_hr_contract_salary_payroll
 msgid "Salary Configurator - Payroll"
-msgstr "薪資設定 - 薪資"
+msgstr "薪酬配置工具 － 工資"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_l10n_be_hr_contract_salary
 msgid "Salary Package Configurator"
-msgstr "薪資組合設定"
+msgstr "薪酬組合配置工具"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_l10n_be_hr_payroll_canteen
 msgid "Salary Package Configurator - Canteen Cost"
-msgstr "薪資組合設定 - 伙食成本"
+msgstr "薪酬組合配置工具 － 食堂成本"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_l10n_be_hr_contract_salary_group_insurance
 msgid "Salary Package Configurator - Group Insurance"
-msgstr "薪資組合設定 - 團體保險"
+msgstr "薪酬組合配置工具 － 團體保險"
 
 #. module: base
 #: model:ir.module.category,name:base.module_category_accounting_localizations_sale
@@ -29243,6 +29244,14 @@ msgstr "通過 Fedex 運輸貨物並線上追蹤物流資訊"
 
 #. module: base
 #: model:ir.module.module,description:base.module_delivery_ups
+msgid ""
+"This is the legacy integration with UPS that is no longer supported. Please "
+"install the new \"UPS Shipping\" module and uninstall this one as soon as "
+"possible. This integration will stop working in 2024."
+msgstr ""
+
+#. module: base
+#: model:ir.module.module,summary:base.module_delivery_ups_rest
 msgid "Send your shippings through UPS and track them online"
 msgstr "通過UPS運輸貨物並線上追蹤物流資訊"
 
@@ -29846,7 +29855,7 @@ msgstr "指定行業以對您的聯繫人進行分類並起草報告."
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_profile__speedscope
 msgid "Speedscope"
-msgstr ""
+msgstr "速度計"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_event_track
@@ -30174,7 +30183,7 @@ msgstr "補充參數"
 #. module: base
 #: model:ir.module.module,summary:base.module_website_event_track_live
 msgid "Support live tracks: streaming, participation, youtube"
-msgstr ""
+msgstr "支援直播曲目: 流媒體、參與、youtube"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_quality_control_picking_batch
@@ -30211,7 +30220,7 @@ msgstr "瑞典"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_se
 msgid "Sweden - Accounting"
-msgstr ""
+msgstr "Sweden - Accounting"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_se_reports
@@ -30623,7 +30632,7 @@ msgstr "泰國 - 會計"
 #: code:addons/base/models/res_users.py:0
 #, python-format
 msgid "The \"%s\" action cannot be selected as home action."
-msgstr ""
+msgstr "不能將\"%s\"操作選為原點操作。"
 
 #. module: base
 #: code:addons/base/models/res_users.py:0
@@ -30703,7 +30712,7 @@ msgstr "模組`%s`現在可能不能使用，請稍後再試."
 #: code:addons/base/models/ir_module.py:0
 #, python-format
 msgid "Those modules cannot be uninstalled: %s"
-msgstr ""
+msgstr "這些模塊無法卸載：%s"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_partner_category__active
@@ -30726,6 +30735,8 @@ msgid ""
 "The name for the current rate is empty.\n"
 "Please set it."
 msgstr ""
+"當前匯率的名稱為空。\n"
+"請設置。"
 
 #. module: base
 #: model:ir.model.constraint,message:base.constraint_res_country_code_uniq
@@ -31046,6 +31057,8 @@ msgid ""
 "The private key or the certificate is not a valid file. \n"
 "%s"
 msgstr ""
+"私鑰或證書不是有效文件。\n"
+"%s"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_currency_rate__rate
@@ -32137,10 +32150,15 @@ msgstr "英國 - 會計報表"
 #: model:ir.module.module,shortdesc:base.module_product_unspsc
 #: model:ir.module.module,summary:base.module_product_unspsc
 msgid "UNSPSC product codes"
-msgstr "UNSPSC product codes"
+msgstr "UNSPSC 產品代碼"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_delivery_ups
+msgid "UPS Shipping (Legacy)"
+msgstr "UPS 貨運 (舊)"
+
+#. module: base
+#: model:ir.module.module,shortdesc:base.module_delivery_ups_rest
 msgid "UPS Shipping"
 msgstr "UPS 發貨"
 
@@ -32179,7 +32197,7 @@ msgstr "美國海外領土"
 #. module: base
 #: model:res.country,vat_label:base.at
 msgid "USt"
-msgstr ""
+msgstr "USt"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_data_merge_utm
@@ -33729,6 +33747,14 @@ msgstr ""
 "連結的活躍使用者: %(names)s"
 
 #. module: base
+#: code:addons/base/models/res_lang.py:0
+#, python-format
+msgid ""
+"You cannot archive the language in which Odoo was setup as it is used by "
+"automated processes."
+msgstr ""
+
+#. module: base
 #: code:addons/base/models/res_partner.py:0
 #, python-format
 msgid "You cannot create recursive Partner hierarchies."
@@ -33756,7 +33782,7 @@ msgstr "您不能停用您當前登入的使用者."
 #: code:addons/base/models/res_users.py:0
 #, python-format
 msgid "You cannot delete a group linked with a settings field."
-msgstr ""
+msgstr "不能刪除與設置字段鏈接的組。"
 
 #. module: base
 #: code:addons/base/models/res_partner.py:0
@@ -33792,7 +33818,7 @@ msgstr ""
 #: code:addons/base/models/ir_config_parameter.py:0
 #, python-format
 msgid "You cannot delete the %s record."
-msgstr ""
+msgstr "不能刪除 %s 記錄。"
 
 #. module: base
 #: code:addons/base/models/res_lang.py:0
@@ -33827,7 +33853,7 @@ msgstr "您不能減少已在會計分錄中使用的貨幣的小數位數."
 #: code:addons/base/models/ir_config_parameter.py:0
 #, python-format
 msgid "You cannot rename config parameters with keys %s"
-msgstr ""
+msgstr "不能用鍵 %s 重命名配置參數"
 
 #. module: base
 #: code:addons/models.py:0
@@ -34298,7 +34324,7 @@ msgstr "多對多"
 #: code:addons/base/models/ir_actions.py:0
 #, python-format
 msgid "many2many fields cannot be evaluated by reference"
-msgstr ""
+msgstr "many2many 欄位不能通過引用進行評估"
 
 #. module: base
 #: model:ir.model.fields.selection,name:base.selection__ir_model_fields__ttype__many2one
@@ -34602,4 +34628,4 @@ msgstr "奧蘭群島"
 #: code:addons/base/models/res_currency.py:0
 #, python-format
 msgid "This currency is set on a company and therefore cannot be deactivated."
-msgstr ""
+msgstr "該貨幣以公司為單位設置，因此無法停用。"

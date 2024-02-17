@@ -28,6 +28,7 @@ from .tools import DEFAULT_SERVER_DATETIME_FORMAT as DATETIME_FORMAT
 from .tools.translate import html_translate, _
 from .tools.mimetypes import guess_mimetype
 
+from odoo import SUPERUSER_ID
 from odoo.exceptions import CacheMiss
 
 DATE_LENGTH = len(date.today().strftime(DATE_FORMAT))
@@ -1117,7 +1118,7 @@ class Field(MetaField('DummyField', (object,), {})):
 
             elif self.store and record._origin and not (self.compute and self.readonly):
                 # new record with origin: fetch from origin
-                value = self.convert_to_cache(record._origin[self.name], record)
+                value = self.convert_to_cache(record._origin[self.name], record, validate=False)
                 env.cache.set(record, self, value)
 
             elif self.compute:
@@ -1131,14 +1132,18 @@ class Field(MetaField('DummyField', (object,), {})):
                         self.compute_value(recs)
                     except (AccessError, MissingError):
                         self.compute_value(record)
-                    try:
-                        value = env.cache.get(record, self)
-                    except CacheMiss:
+                        recs = record
+
+                    missing_recs_ids = tuple(env.cache.get_missing_ids(recs, self))
+                    if missing_recs_ids:
+                        missing_recs = record.browse(missing_recs_ids)
                         if self.readonly and not self.store:
-                            raise ValueError("Compute method failed to assign %s.%s" % (record, self.name))
-                        # fallback to null value if compute gives nothing
-                        value = self.convert_to_cache(False, record, validate=False)
-                        env.cache.set(record, self, value)
+                            raise ValueError(f"Compute method failed to assign {missing_recs}.{self.name}")
+                        # fallback to null value if compute gives nothing, do it for every unset record
+                        false_value = self.convert_to_cache(False, record, validate=False)
+                        env.cache.update(missing_recs, self, itertools.repeat(false_value))
+
+                    value = env.cache.get(record, self)
 
             elif self.type == 'many2one' and self.delegate and not record.id:
                 # parent record of a new record: new record, with the same
@@ -3322,6 +3327,13 @@ class _RelationalMulti(_Relational):
             assert not any(record_ids)
             return self.write_new(records_commands_list)
 
+    def _check_sudo_commands(self, comodel):
+        # if the model doesn't accept sudo commands
+        if not comodel._allow_sudo_commands:
+            # Then, disable sudo and reset the transaction origin user
+            return comodel.sudo(False).with_user(comodel.env.uid_origin)
+        return comodel
+
 
 class One2many(_RelationalMulti):
     """One2many field; the value of such a field is the recordset of all the
@@ -3429,6 +3441,7 @@ class One2many(_RelationalMulti):
 
         model = records_commands_list[0][0].browse()
         comodel = model.env[self.comodel_name].with_context(**self.context)
+        comodel = self._check_sudo_commands(comodel)
 
         ids = {rid for recs, cs in records_commands_list for rid in recs.ids}
         records = records_commands_list[0][0].browse(ids)
@@ -3534,6 +3547,7 @@ class One2many(_RelationalMulti):
         model = records_commands_list[0][0].browse()
         cache = model.env.cache
         comodel = model.env[self.comodel_name].with_context(**self.context)
+        comodel = self._check_sudo_commands(comodel)
 
         ids = {record.id for records, _ in records_commands_list for record in records}
         records = model.browse(ids)
@@ -3805,6 +3819,7 @@ class Many2many(_RelationalMulti):
 
         model = records_commands_list[0][0].browse()
         comodel = model.env[self.comodel_name].with_context(**self.context)
+        comodel = self._check_sudo_commands(comodel)
         cr = model.env.cr
 
         # determine old and new relation {x: ys}
@@ -3954,6 +3969,7 @@ class Many2many(_RelationalMulti):
 
         model = records_commands_list[0][0].browse()
         comodel = model.env[self.comodel_name].with_context(**self.context)
+        comodel = self._check_sudo_commands(comodel)
         new = lambda id_: id_ and NewId(id_)
 
         # determine old and new relation {x: ys}
