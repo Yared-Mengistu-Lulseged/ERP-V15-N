@@ -199,7 +199,11 @@ class AccountTax(models.Model):
         for tax in self:
             if not tax._check_m2m_recursion('children_tax_ids'):
                 raise ValidationError(_("Recursion found for tax '%s'.") % (tax.name,))
-            if any(child.type_tax_use not in ('none', tax.type_tax_use) or child.tax_scope != tax.tax_scope for child in tax.children_tax_ids):
+            if any(
+                child.type_tax_use not in ('none', tax.type_tax_use)
+                or child.tax_scope not in (tax.tax_scope, False)
+                for child in tax.children_tax_ids
+            ):
                 raise ValidationError(_('The application scope of taxes in a group must be either the same as the group or left empty.'))
 
     @api.constrains('company_id')
@@ -556,7 +560,7 @@ class AccountTax(models.Model):
 
         # Get product tags, account.account.tag objects that need to be injected in all
         # the tax_tag_ids of all the move lines created by the compute all for this product.
-        product_tag_ids = product.account_tag_ids.ids if product else []
+        product_tag_ids = product.sudo().account_tag_ids.ids if product else []
 
         taxes_vals = []
         i = 0

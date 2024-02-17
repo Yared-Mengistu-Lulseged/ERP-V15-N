@@ -21,6 +21,10 @@ async function twoDeleteForward(editor) {
     await deleteForward(editor);
 }
 
+const getCurrentCommandNames = powerbox => {
+    return [...powerbox.el.querySelectorAll('.oe-commandbar-commandTitle')].map(c => c.innerText);
+}
+
 describe('Editor', () => {
     describe('init', () => {
         describe('No orphan inline elements compatibility mode', () => {
@@ -1900,7 +1904,7 @@ X[]
                         contentAfter: '<table><tbody><tr><td><p>[]<br></p></td><td><br></td><td><br></td></tr><tr><td><br></td><td><br></td><td><br></td></tr><tr><td><br></td><td><br></td><td><br></td></tr></tbody></table>',
                     });
                 });
-                it('should delete a h1 insdie a nested list immediately after insertion', async () => {
+                it('should delete a h1 inside a nested list immediately after insertion', async () => {
                     await testEditor(BasicEditor, {
                         contentBefore: '<ul><li>abc</li><li class="oe-nested"><ul><li>[]<br></li></ul></li></ul>',
                         stepFunction: async editor => {
@@ -2650,6 +2654,15 @@ X[]
                     await deleteBackward(editor);
                 },
                 contentAfter: `<p>a&nbsp;[]</p>`,
+            });
+        });
+        it('should transform the space node preceded by a styled element to &nbsp;', async () => {
+            await testEditor(BasicEditor, {
+                contentBefore: `<p><strong>ab</strong> [cd]</p>`,
+                stepFunction: async editor => {
+                    await insertText(editor, 'x');
+                },
+                contentAfter: `<p><strong>ab</strong>&nbsp;x[]</p>`,
             });
         });
     });
@@ -3524,6 +3537,25 @@ X[]
                 },
                 contentAfter: '<p>a http://test.com b <a href="http://test.com">http://test.com</a>&nbsp;[] c http://test.com d</p>',
             });
+            await testEditor(BasicEditor, {
+                contentBefore: '<p>http://test.com[]</p>',
+                stepFunction: async (editor) => {
+                    editor.testMode = false;
+                    const p = editor.editable.querySelector('p');
+                    // Simulate multiple text nodes in a p: <p>"http://test" ".com"</p>
+                    const firstTextNode = p.childNodes[0];
+                    const secondTextNode = firstTextNode.splitText(11); 
+                    const selection = document.getSelection();
+                    const anchorOffset = selection.anchorOffset;
+                    triggerEvent(editor.editable, 'keydown', {key: ' ', code: 'Space'});
+                    secondTextNode.textContent = ".com\u00a0";
+                    selection.extend(secondTextNode, anchorOffset + 1);
+                    selection.collapseToEnd();
+                    triggerEvent(editor.editable, 'input', {data: ' ', inputType: 'insertText' });
+                    triggerEvent(editor.editable, 'keyup', {key: ' ', code: 'Space'});
+                },
+                contentAfter: '<p><a href="http://test.com">http://test.com</a>&nbsp;[]</p>',
+            });
         });
         it('should not transform url after two space', async () => {
             await testEditor(BasicEditor, {
@@ -4185,6 +4217,52 @@ X[]
                 contentAfter: '<p>a<font style="color: rgb(255, 0, 0);">[b</font>' +
                     '<a class="btn"><font style="color: rgb(255, 0, 0);">c</font></a>' +
                     '<font style="color: rgb(255, 0, 0);">d]</font>e</p>',
+            });
+        });
+    });
+    describe('powerbox', () => {
+        it('should not filter the powerbox contents when collaborator type on different block node', async () => {
+            await testEditor(BasicEditor, {
+                contentBefore: '<p>ab</p><p>c[]d</p>',
+                stepFunction: async (editor) => {
+                    await insertText(editor, '/');
+                    await insertText(editor, 'heading');
+                    const firstBlock = editor.editable.firstChild;
+                    const secondBlock = editor.editable.lastChild;
+                    await setTestSelection({
+                        anchorNode: firstBlock, anchorOffset: 1,
+                        focusNode: firstBlock, focusOffset: 1,
+                    }, editor.document);
+                    window.chai.expect(editor.commandBar._active).to.be.true;
+                    // Mimick a collaboration scenario where another user types
+                    // random text, using `insertText` as it won't trigger keyup.
+                    editor.execCommand('insertText', 'random text');
+                    window.chai.expect(editor.commandBar._active).to.be.true;
+                    await setTestSelection({
+                        anchorNode: secondBlock, anchorOffset: 9,
+                        focusNode: secondBlock, focusOffset: 9,
+                    }, editor.document);
+                    window.chai.expect(editor.commandBar._active).to.be.true;
+                    await insertText(editor, '1');
+                    window.chai.expect(editor.commandBar._active).to.be.true;
+                    window.chai.expect(getCurrentCommandNames(editor.commandBar)).to.eql(['Heading 1']);
+                },
+            });
+        });
+        it('should close the powerbox if keyup event is called on other block', async () => {
+            await testEditor(BasicEditor, {
+                contentBefore: '<p>ab</p><p>c[]d</p>',
+                stepFunction: async (editor) => {
+                    const firstBlock = editor.editable.firstChild;
+                    await insertText(editor, '/');
+                    window.chai.expect(editor.commandBar._active).to.be.true;
+                    await setTestSelection({
+                        anchorNode: firstBlock, anchorOffset: 1,
+                        focusNode: firstBlock, focusOffset: 1,
+                    }, editor.document);
+                    triggerEvent(editor.editable, 'keyup');
+                    window.chai.expect(editor.commandBar._active).to.be.false;
+                },
             });
         });
     });

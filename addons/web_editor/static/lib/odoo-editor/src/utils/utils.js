@@ -509,11 +509,11 @@ export function setSelection(
 ) {
     if (
         !anchorNode ||
-        !anchorNode.parentNode ||
-        !anchorNode.parentNode.closest('body') ||
+        !anchorNode.parentElement ||
+        !anchorNode.parentElement.closest('body') ||
         !focusNode ||
-        !focusNode.parentNode ||
-        !focusNode.parentNode.closest('body')
+        !focusNode.parentElement ||
+        !focusNode.parentElement.closest('body')
     ) {
         return null;
     }
@@ -1091,13 +1091,13 @@ export function isBlock(node) {
         return false;
     }
     // The node might not be in the DOM, in which case it has no CSS values.
-    if (window.document !== node.ownerDocument) {
+    if (!node.isConnected) {
         return blockTagNames.includes(tagName);
     }
     // We won't call `getComputedStyle` more than once per node.
     let style = computedStyles.get(node);
     if (!style) {
-        style = window.getComputedStyle(node);
+        style = node.ownerDocument.defaultView.getComputedStyle(node);
         computedStyles.set(node, style);
     }
     if (style.display) {
@@ -1832,11 +1832,13 @@ export function setTagName(el, newTagName) {
     while (el.firstChild) {
         n.append(el.firstChild);
     }
-    const closestLi = el.closest('li');
+    // If the element or its parent is a <li>, do not wrap said <li> in a <p>
+    // when converting it to normal text.
+    const containerEl = el.tagName === 'LI' ? el : el.parentElement;
     if (el.tagName === 'LI' && newTagName !== 'p') {
         el.append(n);
-    } else if (closestLi && newTagName === 'p') {
-        closestLi.replaceChildren(...n.childNodes);
+    } else if (containerEl && containerEl.tagName === 'LI' && newTagName === 'p') {
+        containerEl.replaceChildren(...n.childNodes);
     } else {
         el.parentNode.replaceChild(n, el);
     }
@@ -2391,7 +2393,8 @@ export function enforceWhitespace(el, offset, direction, rule) {
         if (
             spaceVisibility &&
             !foundVisibleSpaceTextNode &&
-            getState(...rightPos(spaceNode), DIRECTIONS.RIGHT).cType & CTGROUPS.BLOCK
+            getState(...rightPos(spaceNode), DIRECTIONS.RIGHT).cType & CTGROUPS.BLOCK &&
+            getState(...leftPos(spaceNode), DIRECTIONS.LEFT).cType !== CTYPES.CONTENT
         ) {
             spaceVisibility = false;
         }
