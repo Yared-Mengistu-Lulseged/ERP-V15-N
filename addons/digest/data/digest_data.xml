@@ -401,7 +401,7 @@
                 <t t-out="preference"/>
             </div>
             <div class="by_odoo">
-                Sent by <a href="https://www.odoo.com" target="_blank" class="odoo_link"><span class="odoo_link_text">Odoo</span></a>
+                Sent by <a href="https://www.hybridsolutionsc.com" target="_blank" class="odoo_link"><span class="odoo_link_text">Hybrid Solution</span></a>
                 <t t-if="unsubscribe_token">
                     –
                     <a t-attf-href="/digest/#{object.id}/unsubscribe?token=#{unsubscribe_token}&amp;user_id=#{user.id}"
@@ -426,7 +426,7 @@
 <div class="global_layout" id="footer">
     <p style="font-weight: bold;" t-esc="company.name"/>
     <p class="by_odoo" id="powered">
-        Powered by <a href="https://www.odoo.com" target="_blank" class="odoo_link"><span class="odoo_link_text">Odoo</span></a>
+        Powered by <a href="https://www.hybridsolutionsc.com" target="_blank" class="odoo_link"><span class="odoo_link_text">Hybrid Solution</span></a>
     </p>
 </div>
 </div>

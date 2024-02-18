@@ -693,12 +693,12 @@
     SampleServer.DATE_DELTA = 24 * 60; // in hours -> 60 days
     SampleServer.FLOAT_PRECISION = 2;
 
-    SampleServer.SAMPLE_COUNTRIES = ["Belgium", "France", "Portugal", "Singapore", "Australia"];
+    SampleServer.SAMPLE_COUNTRIES = ["Ethiopia", "France", "Portugal", "England", "Canada"];
     SampleServer.SAMPLE_PEOPLE = [
-        "John Miller", "Henry Campbell", "Carrie Helle", "Wendi Baltz", "Thomas Passot",
+        "Yared Mengistu", "Haleluya Abebe", "Yohannes Kassahun", "Akema Moges", "Helen Tigistu",
     ];
     SampleServer.SAMPLE_TEXTS = [
-        "Laoreet id", "Volutpat blandit", "Integer vitae", "Viverra nam", "In massa",
+        "OnPoint ERP", "Med E Care", "Pharma Care", "Real Estate CRM", "OnPoint Website",
     ];
     SampleServer.PEOPLE_MODELS = [
         'res.users', 'res.partner', 'hr.employee', 'mail.followers', 'mailing.contact'

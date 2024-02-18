@@ -14,8 +14,8 @@ odooExceptionTitleMap.forEach((title, exceptionName) => {
 });
 
 const sessionExpired = {
-    title: _t("Odoo Session Expired"),
-    message: _t("Your Odoo session expired. The current page is about to be refreshed."),
+    title: _t("OnPoint ERP Session Expired"),
+    message: _t("Your OnPoint ERP session expired. The current page is about to be refreshed."),
     buttons: [
         {
             text: _t("Ok"),

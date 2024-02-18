@@ -205,7 +205,7 @@
     <xpath expr="//t[@t-call='web.brand_promotion_message']" position="replace">
         <t t-call="web.brand_promotion_message">
             <t t-set="_message">
-                Create a <a target="_blank" href="http://www.odoo.com/app/website?utm_source=db&amp;utm_medium=website">free website</a>
+                <!-- Create a <a target="_blank" href="http://www.odoo.com/app/website?utm_source=db&amp;utm_medium=website">free website</a> -->
             </t>
             <t t-set="_utm_medium" t-valuef="website"/>
         </t>
@@ -1704,7 +1704,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-9 pb24">
-                            <h3>50,000+ companies run Odoo to grow their businesses.</h3>
+                            <h3>50,000+ companies run OnPoint ERP to grow their businesses.</h3>
                             <p class="lead">Join us and make your company a better place.</p>
                         </div>
                         <div class="col-lg-3 pb24">
@@ -2060,7 +2060,7 @@
 </record>
 
 <!-- Error and special pages -->
-<template id="website_info" name="Odoo Information">
+<template id="website_info" name="OnPoint ERP Information">
     <t t-call="website.layout">
         <div id="wrap"/>
     </t>
@@ -2078,7 +2078,7 @@
                     <small>Odoo Version <t t-out="version.get('server_version')"/></small>
                 </h1>
                 <p>
-                    Information about the <t t-esc="res_company.name"/> instance of Odoo, the <a target="_blank" href="https://www.odoo.com">Open Source ERP</a>.
+                    Information about the <t t-esc="res_company.name"/> instance of OnPoint ERP, the <a target="_blank" href="https://www.hybridsolutionsc.com">OnPoint ERP</a>.
                 </p>
 
                 <div class="alert alert-warning alert-dismissable mt16" groups="website.group_website_publisher" role="status">
