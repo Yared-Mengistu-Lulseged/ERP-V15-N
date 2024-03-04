@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_own_letter_stage,letter.stage,model_letter_stage,,0,0,0,0
+access_own_letter_stage,letter.stage,model_letter_stage,letter_tracking.group_own_letter,1,1,1,1
+access_own_incoming_letter,incoming.letter,model_incoming_letter,letter_tracking.group_own_letter,1,1,1,1
+access_own_outgoing_letter,outgoing.letter,model_outgoing_letter,letter_tracking.group_own_letter,1,1,1,1
+access_all_letter_stage,letter.stage,model_letter_stage,letter_tracking.group_all_letter,1,1,1,1
+access_all_incoming_letter,incoming.letter,model_incoming_letter,letter_tracking.group_all_letter,1,1,1,1
+access_all_outgoing_letter,outgoing.letter,model_outgoing_letter,letter_tracking.group_all_letter,1,1,1,1

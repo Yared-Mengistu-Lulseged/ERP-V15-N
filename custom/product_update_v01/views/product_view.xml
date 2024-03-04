@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <data>
+        <record id="view_product_form_inherit" model="ir.ui.view" >
+            <field name="name">product.template.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="after">
+                    <field name="M2"/>
+                    <field name="Kitchen"/>
+                    <field name="Bath_room"/>
+                    <field name="Maids_room"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>
+
+
+
+
+

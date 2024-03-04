@@ -1,0 +1,20 @@
+{
+    'name': 'Outgoing and Incoming Letter Tracking',
+    'version': '1.0',
+    'category': '',
+    'sequence': 6,
+    'summary': 'Outgoing and Incoming Letter Tracking',
+    'description': '',
+    'data': [
+        'security/letter_security.xml',
+        'security/ir.model.access.csv',
+        'data/incoming_outgoing_seq.xml',
+        'views/letter_stages.xml',
+        'views/incoming_letter.xml',
+        'views/outgoing_letter.xml',
+    ],
+    'depends': ['hr', 'mail'],
+    'installable': True,
+    'assets': {},
+    'license': 'LGPL-3',
+}

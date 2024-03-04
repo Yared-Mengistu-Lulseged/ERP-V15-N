@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Views for Incoming Letters -->
+        <record id="view_incoming_letter_tree" model="ir.ui.view">
+            <field name="name">incoming.letter.tree</field>
+            <field name="model">incoming.letter</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="reference_number"/>
+                    <field name="name"/>
+                    <field name="sender"/>
+                    <field name="received_date"/>
+                    <field name="received_by"/>
+                    <field name="assigned_to"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_incoming_letter_form" model="ir.ui.view">
+            <field name="name">incoming.letter.form</field>
+            <field name="model">incoming.letter</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="stage" widget="statusbar"
+                                options="{'clickable': '1'}"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <label for="reference_number">Reference Number:</label>
+                                <br/>
+                                <field name="reference_number"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="sender"/>
+                                <field name="index"/>
+                                <field name="received_date"/>
+                                <field name="issued_date"/>
+                                <field name="link"/>
+                            </group>
+                            <group>
+                                <field name="content"/>
+                                <field name="received_by"/>
+                                <field name="assigned_to"/>
+                                <field name="attachment"/>
+                                <field name="attachment_add"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids" options="{'post_refresh': 'recipients'}"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        
+        <record id="incoming_letter_case_kanban_view" model="ir.ui.view">
+            <field name="name">incoming.letter.kanban</field>
+            <field name="model">incoming.letter</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <kanban default_group_by="stage" class="o_kanban_small_column o_opportunity_kanban" on_create="quick_create"
+                    archivable="false" sample="1">
+                    <field name="stage" options='{"group_by_tooltip": {"requirements": "Description"}}'/>
+                    <field name="reference_number"/>
+                    <field name="name"/>
+                    <field name="sender"/>
+                    <field name="received_date"/>
+                    <field name="received_by"/>
+                    <field name="assigned_to"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click oe_kanban_card d-flex flex-column">
+                                <div class="o_dropdown_kanban dropdown">
+                                    <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown" data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                        <span class="fa fa-ellipsis-v"/>
+                                    </a>
+                                    <div class="dropdown-menu" role="menu">
+                                        <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit</a></t>
+                                        <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+                                    </div>
+                                </div>
+                                <div class="oe_kanban_content flex-grow-1">
+                                    <div class="o_kanban_record_title oe_kanban_details">
+                                        <strong style="font-size: 16px;"><field name="name"/></strong>
+                                    </div>
+                                    <div class="o_kanban_record_subtitle">
+                                        <strong>Reference: </strong>
+                                        <field name="reference_number"/>
+                                        <br/>
+                                        <strong>Received Date: </strong>
+                                        <field name="received_date"/>
+                                    </div>
+                                    <div>
+                                        <strong>Sender: </strong>
+                                        <field name="sender"/>
+                                    </div>
+                                </div>
+                                <div class="oe_kanban_footer">
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_right">
+                                            <strong>Received By: </strong>
+                                            <field name="received_by"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Action for Incoming Letters -->
+        <record id="action_view_incoming_letters" model="ir.actions.act_window">
+            <field name="name">Incoming Letters</field>
+            <field name="res_model">incoming.letter</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="view_id" ref="letter_tracking.incoming_letter_case_kanban_view"/>
+        </record>
+
+        <!-- Incoming Letters Menu -->
+        <menuitem id="menu_action_incoming_letters" 
+                  name="Incoming Letters" 
+                  parent="letter_tracking.menu_letters"
+                  action="action_view_incoming_letters" 
+                  sequence="1"/>
+    </data>
+</odoo>

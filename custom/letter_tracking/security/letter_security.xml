@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="module_letters_main" model="ir.module.category">
+            <field name="name">Letter Tracking</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="group_own_letter" model="res.groups">
+            <field name="name">User: Own Documents Only</field>
+            <field name="category_id" ref="module_letters_main"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">the user will have access to his own data in the letters application.</field>
+        </record>
+
+        <record id="group_all_letter" model="res.groups">
+            <field name="name">User: All Documents</field>
+            <field name="category_id" ref="module_letters_main"/>
+            <field name="implied_ids" eval="[(4, ref('group_own_letter'))]"/>
+            <field name="comment">the user will have access to all records of everyone in the letter application.</field>
+        </record>
+
+        <record model="ir.ui.menu" id="sales_team.menu_sale_config">
+            <field name="name">Configuration</field>
+            <field eval="[(6,0,[ref('base.group_system')])]" name="groups_id"/>
+        </record>
+
+    <data noupdate="1">
+        <record id="incoming_rule_all_letter" model="ir.rule">
+            <field name="name">All Incoming Letters</field>
+            <field ref="letter_tracking.model_incoming_letter" name="model_id"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="groups" eval="[(4, ref('letter_tracking.group_all_letter'))]"/>
+        </record>
+
+        <record id="outgoing_rule_all_letter" model="ir.rule">
+            <field name="name">All Outgoing Letters</field>
+            <field ref="letter_tracking.model_outgoing_letter" name="model_id"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="groups" eval="[(4, ref('letter_tracking.group_all_letter'))]"/>
+        </record>
+
+        <record id="incoming_rule_own_letter" model="ir.rule">
+            <field name="name">Own Incoming Letters</field>
+            <field ref="letter_tracking.model_incoming_letter" name="model_id"/>
+            <field name="domain_force">[('assigned_to.user_id', '=', user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="groups" eval="[(4, ref('letter_tracking.group_own_letter'))]"/>
+        </record>
+
+        <record id="outgoing_rule_own_letter" model="ir.rule">
+            <field name="name">Own Outgoing Letters</field>
+            <field ref="letter_tracking.model_outgoing_letter" name="model_id"/>
+            <field name="domain_force">[('sent_by.user_id', '=', user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="groups" eval="[(4, ref('letter_tracking.group_own_letter'))]"/>
+        </record>
+    </data>
+</odoo>
