@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<odoo>
+    <data>
+        <record id="view_product_form_inherit" model="ir.ui.view" >
+            <field name="name">product.template.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <field name="categ_id" position="after">
+
+                    <field name="M2"/>
+                    <field name="Kitchen" />
+                    <field name="Bath_room"/>
+                    <field name="Maids_room"/>
+                    <field name="Bed_room"/>
+                    <field name="Floor_no"/>
+                    <field name="Room_no"/>
+                    <field name="parking"/>
+                    <field name="status"/>
+                    <field name="PricePerSquare"/>
+                    <field name="SquareMeter"/>
+                    <field name="total"/>
+                </field>
+            </field>
+        </record>
+
+         <record id="product_template_tree_view_inherit" model="ir.ui.view">
+        <field name="name">product.template.tree.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_tree_view"/>
+        <field name="arch" type="xml">
+            <tree string="Product" multi_edit="1" sample="1">
+                <field name="M2"/>
+                    <field name="Kitchen" optional="hide"/>
+                    <field name="Bath_room" optional="hide"/>
+                    <field name="Maids_room" optional="hide"/>
+                    <field name="Bed_room"/>
+                    <field name="Floor_no"/>
+                    <field name="Room_no"/>
+                    <field name="parking"/>
+                    <field name="status"/>
+                    <field name="PricePerSquare"/>
+                    <field name="SquareMeter"/>
+                    <field name="total"/>
+            </tree>
+        </field>
+        </record>
+<!--        <record id="view_sale_order_line_tree" model="ir.ui.view">-->
+<!--            <field name="name">sale.order.line.tree</field>-->
+<!--            <field name="model">sale.order.line</field>-->
+<!--            <field name="inherit_id" ref="sale_view_order_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="product_uom_qty" position="after">-->
+<!--                    <field name="M2" readonly="1"/>-->
+<!--                    <field name="Kitchen" readonly="1" invisible="1"/>-->
+<!--                    <field name="Bath_room" readonly="1" invisible="1"/>-->
+<!--                    <field name="Maids_room" readonly="1" invisible="1"/>-->
+<!--                    <field name="Bed_room" readonly="1" invisible="1"/>-->
+<!--                    <field name="Floor_no" readonly="1" invisible="1"/>-->
+<!--                    <field name="Room_no" readonly="1" invisible="1"/>-->
+<!--                </field>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="agreement_action" model="ir.actions.act_window">-->
+<!--            <field name="name">Main Sales Contract Agreement</field>-->
+<!--            <field name="res_model">agreement.tenant</field>-->
+<!--            <field name="view_mode">tree,form</field>-->
+<!--            <field name="help" type="html">-->
+<!--                <p class="o_view_nocontent_smiling_face">-->
+<!--                There is not any sales agreement created..!-->
+<!--                </p>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>
+
+
+
+
+

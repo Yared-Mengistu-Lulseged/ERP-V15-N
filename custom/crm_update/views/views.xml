@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<odoo>
+    <data>
+        <record id="crm_lead_form_custom" model="ir.ui.view">
+            <field name="name">crm.lead.form.custom</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="before">
+                    <field name="remark" widget="radio" options="{'horizontal': true}"/>
+                </field>
+                <field name="team_id" position="after">
+                    <field name="project_ids" widget="many2many_tags" options="{'no_create': True}" Limit="1"/>
+                </field>
+
+                <field name="team_id" position="after">
+                    <field name="team_idd"/>
+                </field>
+
+                <field name="team_id" position="after">
+                    <field name="tele_marketer"/>
+                </field>
+                <field name="tele_marketer" position="after">
+                    <field name="interested_in"/>
+                </field>
+            </field>
+        </record>
+        <record id="crm_lead_form_customa" model="ir.ui.view">
+            <field name="name">crm.lead.form.customa</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+            <field name="arch" type="xml">
+                <field name="team_id" position="after">
+                    <field name="tele_marketer"/>
+                </field>
+            </field>
+        </record>
+        <record id="crm_lead_form_customu" model="ir.ui.view">
+            <field name="name">crm.lead.form.customu</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="before">
+                    <field name="remark"/>
+                </field>
+            </field>
+        </record>
+        <record id="crm_lead_form_customa" model="ir.ui.view">
+            <field name="name">crm.lead.form.customa</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+            <field name="arch" type="xml">
+                <field name="team_id" position="after">
+                    <field name="interested_in"/>
+                </field>
+            </field>
+        </record>
+        <record id="crm_lead_form_customb" model="ir.ui.view">
+            <field name="name">crm.lead.form.customb</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+            <field name="arch" type="xml">
+                <field name="team_id" position="after">
+                    <field name="tele_marketer"/>
+                </field>
+            </field>
+        </record>
+        <record id="crm_lead_form_customc" model="ir.ui.view">
+            <field name="name">crm.lead.form.customc</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+            <field name="arch" type="xml">
+                <field name="team_id" position="after">
+                    <field name="team_idd"/>
+                </field>
+            </field>
+        </record>
+        <record id="crm_lead_form_customd" model="ir.ui.view">
+            <field name="name">crm.lead.form.customd</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+            <field name="arch" type="xml">
+                <field name="team_id" position="after">
+                    <field name="project_ids" widget="many2many_tags"/>
+                </field>
+            </field>
+        </record>
+                <!-- Override the CRM lead list view -->
+<!--        <record id="view_crm_case_leads_custom" model="ir.ui.view">-->
+<!--            <field name="name">crm.lead.list.custom</field>-->
+<!--            <field name="model">crm.lead</field>-->
+<!--            <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='phone']" position="replace"/>-->
+<!--            </field>-->
+<!--        </record>-->
+        <!-- Inherit the view and add the Remark filter -->
+        <record id="view_crm_lead_inherit" model="ir.ui.view">
+            <field name="name">crm.lead.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <search string="Search Remark">
+                    <field name="name" string="Name"/>
+                    <separator/>
+                    <filter string="Remark" name="remark" domain="[('remark', '=', 'NW')]"/>
+                    <group expand="1" string="Group By...">
+                    <filter string='Remark' name="group_by_remark" domain="[]" context="{'group_by' : 'remark'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+
+        <!-- Custom view for Opportunity List -->
+        <record id="crm_opportunity_list_custom" model="ir.ui.view">
+            <field name="name">crm.opportunity.list.custom</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="before">
+                    <field name="remark"/>
+                </field>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>
+
