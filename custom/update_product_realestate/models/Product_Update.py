@@ -14,7 +14,7 @@ class ProductUpdate(models.Model):
     bath = fields.Char(string='Bath Room')
     kitchen = fields.Char(string='Kitchen Room')
     maids = fields.Char(string='Maids Room')
-    parking = fields.Char(string='Parking place')
+    parking = fields.Char(string='Parking Place')
     uint_status = fields.Selection([
         ('Free', 'Free'),
         ('Sold', 'Sold'),
