@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        add new on form field-->
+        <record id="project_view_form_simplified_inherit" model="ir.ui.view">
+            <field name="name">project.view.form.simplified.inherit</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.project_project_view_form_simplified"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="building_name" />
+                    <field name="apt_name" />
+                    <field name="location" />
+                    <field name="square_size" />
+                    <field name="number_of_unit" />
+                    <field name="floors" />
+                    <field name="house_floors" />
+
+                </field>
+            </field>
+        </record>
+<!--     add field on kanban-->
+
+        <record id="project_view_kanban_inherited" model="ir.ui.view">
+            <field name="name">project.project.kanban.inherited</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//span[@class='o_text_overflow']" position="after">
+                   <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                        <span class="fa fa-building mr-2" aria-label="Building Name" title="Building Name"></span>
+                        <span class="o_form_label" style="margin-right: 5px; font-weight: bold;">Building Name:</span>
+                        <field name="building_name" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                    </span>
+                    <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                        <span class="fa fa-map-marker mr-2" aria-label="Location" title="Location"></span>
+                        <span class="o_form_label" style="margin-right: 5px; font-weight: bold;">Location:</span>
+                        <field name="location" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                    </span>
+
+                    <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                        <span class="fa fa-square mr-2" aria-label="Total Landing Size(M2)" title="Total Landing Size(M2)"></span>
+                        <span class="o_form_label" style="margin-right: 5px; font-weight: bold;">Total Landing Size(M2):</span>
+                        <field name="square_size" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                    </span>
+
+                    <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                        <span class="fa fa-home mr-2" aria-label="Total Number House" title="Total Number House"></span>
+                        <span class="o_form_label" style="margin-right: 5px; font-weight: bold;">Total Number House:</span>
+                        <field name="number_of_unit" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                    </span>
+
+                    <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                        <span class="fa fa-building-o  mr-2" aria-label="Number Floor" title="Number Floor"></span>
+                        <span class="o_form_label" style="margin-right: 5px; font-weight: bold;">Number Floor:</span>
+                        <field name="floors" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                    </span>
+
+                    <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                        <span class="fa fa-home  mr-2" aria-label="House Per Floor" title="House Per Floor"></span>
+                        <span class="o_form_label" style="margin-right: 5px; font-weight: bold;">House Per Floor:</span>
+                        <field name="house_floors" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                    </span>
+
+                </xpath>
+<!--                <xpath expr="//div[@class='oe_kanban_bottom_right']" position="attributes">-->
+<!--                    <attribute name="invisible">1</attribute>-->
+<!--                </xpath>-->
+            </field>
+        </record>
+
+<!--        Edit Project -->
+
+
+        <record id="edit_project_inherit" model="ir.ui.view">
+            <field name="name">project.project.form.inherit</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <field name="label_tasks" position="before">
+                    <field name="building_name" />
+                    <field name="apt_name" />
+                    <field name="location" />
+                    <field name="square_size" />
+                    <field name="number_of_unit" />
+                    <field name="floors" />
+                    <field name="house_floors" />
+
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

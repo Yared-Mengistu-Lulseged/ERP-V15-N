@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        add new on form field-->
+        <record id="view_product_update_form" model="ir.ui.view">
+            <field name="name">product.template.product.form.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+<!--                Edite Header-->
+                <xpath expr="//div[@class='oe_title']" position="replace">
+                        <div class="oe_title">
+                           <label for="name" string="Property Name"/>
+                            <h1>
+                                <div class="d-flex">
+                                    <field name="priority" widget="priority" class="mr-3"/>
+                                    <field class="text-break" name="name" placeholder="e.g. Property Name"/>
+                                </div>
+                            </h1>
+                        </div>
+                </xpath>
+                <xpath expr="//field[@name='purchase_ok']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//label[@for='purchase_ok']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='general_information']" position="replace">
+                    <page string="General Information" name="general_information">
+                        <group >
+                            <group name="group_general" string="General Information" >
+                                <field name="active" invisible="1"/>
+                                <field name="default_code"/>
+                                <field name="detailed_type"/>
+                                <field name="uint_status"/>
+                                <field name="project_ids"/>
+                                <field name="building_name" />
+                                <field name="apt_name"/>
+                                <field name="location"/>
+
+                            </group>
+                            <group name="group_general" string="Units Amenities Information" >
+                                <field name="square_size"/>
+                                <field name="room_number"/>
+                                <field name="bed_room"/>
+                                <field name="bath" />
+                                <field name="kitchen"/>
+                                <field name="maids"/>
+                                <field name="parking"/>
+                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+
+                            </group>
+
+
+                        </group>
+                        <group>
+                            <group name="group_standard_price" string="Apartment unit Price" >
+                                    <field name="square_meter_price"/>
+                                    <label for="list_price" class="mt-1"/>
+                                    <div name="pricing">
+                                      <field name="list_price" class="oe_inline" widget='monetary'
+                                        options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                    </div>
+                                    <label for="standard_price" groups="base.group_user" attrs="{'invisible': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}"/>
+                                    <div name="standard_price_uom" groups="base.group_user" attrs="{'invisible': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}" class="o_row">
+                                        <field name="standard_price" widget='monetary' options="{'currency_field': 'cost_currency_id', 'field_digits': True}"/>
+                                        <span groups="uom.group_uom" class="oe_read_only">per
+                                            <field name="uom_name"/>
+                                        </span>
+                                    </div>
+                                    <field name="categ_id" string="Product Category"/>
+                                    <field name="company_id" groups="base.group_multi_company"
+                                        options="{'no_create': True}"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="cost_currency_id" invisible="1"/>
+                                    <field name="product_variant_id" invisible="1"/>
+                                </group>
+
+                        </group>
+                        <group string="Internal Notes">
+                                <field name="description" nolabel="1" placeholder="This note is only for internal purposes."/>
+                        </group>
+                    </page>
+                </xpath>
+
+            </field>
+        </record>
+<!--     add field on tree-->
+        <record id="product_template_tree_view_inherited" model="ir.ui.view">
+            <field name="name">product.template.product.tree.inherited</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="replace">
+                    <tree string="Product" multi_edit="1" sample="1">
+                    <header>
+                        <button string="Print Labels" type="object" name="action_open_label_layout"/>
+                    </header>
+                        <field name="product_variant_count" invisible="1"/>
+                        <field name="sale_ok" invisible="1"/>
+                        <field name="currency_id" invisible="1"/>
+                        <field name="cost_currency_id" invisible="1"/>
+                        <field name="name" string="Product Name"/>
+                        <field name="default_code" optional="hide"/>
+                        <field name="uint_status"/>
+                        <field name="project_ids"/>
+                        <field name="square_size"/>
+                        <field name="room_number"/>
+                        <field name="bed_room"/>
+                        <field name="bath" />
+                        <field name="kitchen"/>
+                        <field name="maids"/>
+                        <field name="parking"/>
+                        <field name="square_meter_price"/>
+                        <field name="list_price" string="Sales Price" widget='monetary' options="{'currency_field': 'currency_id'}" optional="show" decoration-muted="not sale_ok"/>
+                        <field name="standard_price" widget='monetary' options="{'currency_field': 'cost_currency_id'}" optional="hide" readonly="1"/>
+                        <field name="categ_id" optional="hide"/>
+                        <field name="detailed_type" optional="hide" readonly="1"/>
+                        <field name="type" invisible="1"/>
+                        <field name="uom_id" readonly="1" optional="show" groups="uom.group_uom"/>
+                        <field name="active" invisible="1"/>
+                        <field name="activity_exception_decoration" widget="activity_exception"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+<!--        Update kanban-->
+        <record id="product_template_kanban_view_inherit" model="ir.ui.view">
+            <field name="name">Product.template.product.kanban.inherit</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_kanban_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@class='oe_kanban_card oe_kanban_global_click']" position="replace">
+                    <div class="oe_kanban_card oe_kanban_global_click">
+
+                        <div class="oe_kanban_details">
+                            <div class="o_kanban_record_top mb-0">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title"  style="margin-right: 5px; font-weight: bold; color: purple;">
+                                        <field name="name" style="margin-right: 5px; font-weight: bold; color: purple;"/>
+                                    </strong>
+                                </div>
+                                <strong style="color: orange;">
+                                    <field name="uint_status" />
+                                </strong>
+
+                            </div>
+<!--                            <t t-if="record.default_code.value">[<field name="default_code"/>]</t>-->
+                            <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                                <span class="fa fa-building mr-2" aria-label="Building Name" title="Project Name" style="color: purple;" ></span>
+                                <span class="o_form_label" style="margin-right: 5px; font-weight: bold;  color: Light blue;">project Name:</span>
+                                <field name="project_ids" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                            </span>
+
+                            <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                                <span class="fa fa-map-marker mr-2" aria-label="Location" title="Location:" style="color: purple;"></span>
+                                <span class="o_form_label" style="margin-right: 5px; font-weight: bold; ">Location:</span>
+                                <field name="location" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                            </span>
+                            <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                                <span class="fa fa-square-o mr-2" aria-label="Total Landing Size(M2)" title="Total Landing Size(M2):" style="color: purple;"></span>
+                                <span class="o_form_label" style="margin-right: 5px; font-weight: bold; color: Light blue;">Total Landing Size(M2):</span>
+                                <field name="square_size" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                            </span>
+                            <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                                <span class="fa fa-bed mr-2" aria-label="Bed Room" title="Bed Room:" style="color: purple;"></span>
+                                <span class="o_form_label" style="margin-right: 5px; font-weight: bold; color: Light blue;">Bed Room:</span>
+                                <field name="bed_room" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                            </span>
+                            <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                                <span class="fa fa-bath mr-2" aria-label="Bath Room" title="Bath Room:" style="color: purple;"></span>
+                                <span class="o_form_label" style="margin-right: 5px; font-weight: bold; color: Light blue;">Bath Room:</span>
+                                <field name="bath" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                            </span>
+                            <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                                <span class="fa fa-cutlery mr-2" aria-label="Bath Room" title="Kitchen Room:" style="color: purple;"></span>
+                                <span class="o_form_label" style="margin-right: 5px; font-weight: bold; color: Light blue;">Kitchen Room:</span>
+                                <field name="kitchen" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                            </span>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                            <div t-if="record.product_variant_count.value &gt; 1" groups="product.group_product_variant">
+                                <strong>
+                                    <t t-esc="record.product_variant_count.value"/> Variants
+                                </strong>
+                            </div>
+                            <div name="product_lst_price" class="fa fa-usd mt-1" style="color: purple;">
+                                Price: <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"></field>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+<!--        search field-->
+        <record id="product_template_search_inherit" model="ir.ui.view">
+            <field name="name">product.template.search.inherited</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <filter string="Free" name="services" domain="[('uint_status','=','Free')]"/>
+                    <filter string="Sold" name="services" domain="[('uint_status','=','Sold')]"/>
+                    <filter string="Reserved" name="services" domain="[('uint_status','=','Reserved')]"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>
