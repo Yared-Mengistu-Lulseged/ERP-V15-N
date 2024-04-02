@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<templates id="sh_add_custom_action" xml:space="preserve">
+    <t t-inherit="web.DropdownMenu" t-inherit-mode="extension">
+        <xpath expr="//ul/t[2]" position="after">
+            <t t-if="show_open_record_new_tab_button">
+                <t t-if="props.hotkeyTitle == 'Additional actions'">
+                    <li t-on-item-selected="_OpenMultiActionRecords">
+                        <a class="dropdown-item"
+                        t-att-class="{
+                            selected: props.isActive,
+                            [props.className]: props.className,
+                            'd-flex': props.removable,
+                            'align-items-center': props.removable,
+                            'justify-content-between': props.removable
+                        }"
+                        t-att-aria-checked="props.isActive ? 'true' : 'false'"
+                        role="menuitemcheckbox"
+                        t-att-href="props.url or '#'"
+                        t-on-click.prevent="trigger('item-selected', { item: props })"
+                        >Open Record In New Tab
+                        </a>
+                    </li>
+                </t>
+            </t>
+        </xpath>
+    </t>
+</templates>
