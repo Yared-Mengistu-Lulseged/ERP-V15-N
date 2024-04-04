@@ -101,7 +101,7 @@ def serialize_exception(f):
             se = _serialize_exception(e)
             error = {
                 'code': 200,
-                'message': "Odoo Server Error",
+                'message': "OnPoint ERP Server Error",
                 'data': se
             }
             return werkzeug.exceptions.InternalServerError(json.dumps(error))
@@ -2024,7 +2024,7 @@ class ReportController(http.Controller):
             se = _serialize_exception(e)
             error = {
                 'code': 200,
-                'message': "Odoo Server Error",
+                'message': "OnPoint ERP Server Error",
                 'data': se
             }
             res = request.make_response(html_escape(json.dumps(error)))

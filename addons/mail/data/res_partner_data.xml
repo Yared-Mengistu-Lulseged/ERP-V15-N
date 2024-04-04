@@ -3,7 +3,7 @@
 
     <record id="base.partner_root" model="res.partner">
         <field name="name">OnPoint ERPBot</field>
-        <field name="email">onpointerpbot@example.com</field>
+        <field name="email">onpointerpbot@hybridsolutionsc.com</field>
         <field name="image_1920" type="base64" file="mail/static/src/img/odoobot.png"/>
     </record>
 

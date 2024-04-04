@@ -22,11 +22,11 @@ class Users(models.Model):
 
     notification_type = fields.Selection([
         ('email', 'Handle by Emails'),
-        ('inbox', 'Handle in Odoo')],
+        ('inbox', 'Handle in OnPoint ERP')],
         'Notification', required=True, default='email',
         help="Policy on how to handle Chatter notifications:\n"
              "- Handle by Emails: notifications are sent to your email address\n"
-             "- Handle in Odoo: notifications appear in your Odoo Inbox")
+             "- Handle in OnPoint ERP: notifications appear in your OnPoint ERP Inbox")
     res_users_settings_ids = fields.One2many('res.users.settings', 'user_id')
 
     # ------------------------------------------------------------
