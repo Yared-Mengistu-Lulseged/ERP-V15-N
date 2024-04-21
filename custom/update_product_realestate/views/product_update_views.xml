@@ -40,11 +40,15 @@
 
                             </group>
                             <group name="group_general" string="Units Amenities Information" >
+                                <field name="floor_size"/>
+                                <field name="proportion_size"/>
                                 <field name="square_size"/>
                                 <field name="room_number"/>
                                 <field name="bed_room"/>
                                 <field name="bath" />
+                                <field name="store_laundry_room"/>
                                 <field name="kitchen"/>
+                                <field name="dining"/>
                                 <field name="maids"/>
                                 <field name="parking"/>
                                 <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
@@ -55,6 +59,7 @@
                         </group>
                         <group>
                             <group name="group_standard_price" string="Apartment unit Price" >
+                                    <field name="exchange_rate"/>
                                     <field name="square_meter_price"/>
                                     <label for="list_price" class="mt-1"/>
                                     <div name="pricing">
@@ -104,11 +109,15 @@
                         <field name="default_code" optional="hide"/>
                         <field name="uint_status"/>
                         <field name="project_ids"/>
+                        <field name="floor_size"/>
+                        <field name="proportion_size"/>
                         <field name="square_size"/>
                         <field name="room_number"/>
                         <field name="bed_room"/>
                         <field name="bath" />
+                        <field name="store_laundry_room"/>
                         <field name="kitchen"/>
+                        <field name="dining"/>
                         <field name="maids"/>
                         <field name="parking"/>
                         <field name="square_meter_price"/>
