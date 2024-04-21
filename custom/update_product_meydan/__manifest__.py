@@ -1,8 +1,8 @@
 {
-    'name': 'Custom Product_Spare Part Module',
+    'name': 'Custom Product Module for Meydan',
     'version': '1.0',
     'author': "Yohannes k",
-    'summary': 'Product Update Spare Part ',
+    'summary': 'Product Update Meydan ',
     'depends': ['base', 'product'],
     'data': [
         'views/product_update_views.xml',
