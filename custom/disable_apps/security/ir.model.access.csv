@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_disable_apps_disable_apps,Zergaw_Admin,disable_apps.model_disable_apps,disable_apps.Menu_Control_Zergaw,1,1,1,1
+Cust_admin,Customer_Admin,disable_apps.model_disable_apps,disable_apps.Group_Control_Customer_Admin,1,1,1,1
+Cust_HR,Customer_HR,disable_apps.model_disable_apps,disable_apps.Group_Control_Customer_HR,1,0,1,0
+Cust_User,Customer_User,disable_apps.model_disable_apps,disable_apps.Group_Control_Customer_Employee,1,0,0,0

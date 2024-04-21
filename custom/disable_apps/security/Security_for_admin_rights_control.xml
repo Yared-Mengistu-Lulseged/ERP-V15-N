@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="Menu_Control_for_Customer_Admin" model="ir.module.category">
+        <field name="name">Admin Privilege</field>
+        <field name="sequence">300</field>
+    </record>
+
+    <record id="Group_Control_Customer_Employee" model="res.groups">
+        <field name="name">Employee User</field>
+        <field name="category_id" ref="Menu_Control_for_Customer_Admin"/>
+    </record>
+
+    <record id="Group_Control_Customer_HR" model="res.groups">
+        <field name="name">HR User</field>
+        <field name="category_id" ref="Menu_Control_for_Customer_Admin"/>
+        <field name="implied_ids" eval="[(4,ref('Group_Control_Customer_Employee'))]"/>
+    </record>
+
+    <record id="Group_Control_Customer_Admin" model="res.groups">
+        <field name="name">Admin User</field>
+        <field name="category_id" ref="Menu_Control_for_Customer_Admin"/>
+        <field name="implied_ids" eval="[(4,ref('Group_Control_Customer_HR')),(4,ref('Group_Control_Customer_Employee'))]"/>
+    </record>
+
+    <record id="Menu_Control_Zergaw" model="res.groups">
+         <field name="name">Zergaw</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="implied_ids" eval="[(4,ref('base.group_no_one'))]"/>
+        <field name="users" eval="[(4,ref('base.user_admin'))]"/>
+    </record>
+
+    <data noupdate="1">
+        <record id="admin_user_hidden_disable_App" model="ir.rule">
+                <field name="name">Only admin can see admin user field</field>
+                <field name="model_id" ref="base.model_res_users"/>
+                <field name="groups"  eval="[(4,ref('Group_Control_Customer_Admin')),(4,ref('Group_Control_Customer_HR')),(4,ref('Group_Control_Customer_Employee'))]"/>
+                <field name="domain_force">[('id', '!=', 2)]</field>
+                <field name="perm_read" eval="True"/>
+                <field name="perm_write" eval="False"/>
+                 <field name = "perm_create" eval = "False" />
+                <field name = "perm_unlink" eval = "False" />
+        </record>
+
+        <record id="base.default_user" model="res.users">
+                <field name="groups_id" eval="[(4,ref('Group_Control_Customer_Employee'))]"/>
+        </record>
+    </data>
+
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_for_UL_zergaw_form" model="ir.ui.view">
+        <field name="name">Set User Limit</field>
+        <field name="model">ui.user.limit</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+
+                </header>
+                <sheet>
+                    <group name="Top">
+                        <group name="Top_left">
+                            <field name="Allowed_Users"/>
+                            <field name="Granted_By"/>
+                        </group>
+                        <group name="Top_right">
+                            <field name="Granted_for"/>
+                            <field name="Granted_Time"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="View_for_UL_zergaw_tree" model="ir.ui.view">
+        <field name="name">List User Limits</field>
+        <field name="model">ui.user.limit</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="Granted_for"/>
+                <field name="Granted_By"/>
+                <field name="Allowed_Users"/>
+                <field name="Granted_Time"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>

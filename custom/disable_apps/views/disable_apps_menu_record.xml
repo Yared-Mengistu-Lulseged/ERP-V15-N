@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+
+
+     <!--Disable Apps Menu for Customer Admin, HR, and Employee: To enable set to [(4,ref('access group name')]-->
+<record id="base.menu_management" model="ir.ui.menu" >
+    <field name="groups_id" eval="[(6, 0, [ ref('disable_apps.Menu_Control_Zergaw')])]"/>
+</record>
+
+     <!--Disable Groups Menu for Customer Admin, HR, and Employee: To enable set to [(4,ref('access group name')]-->
+<record id="base.menu_action_res_groups" model="ir.ui.menu" >
+    <field name="groups_id" eval="[(6, 0, [ ref('disable_apps.Menu_Control_Zergaw')])]"/>
+</record>
+
+            <!--Disable Technical Menu for Customer Admin, HR, and Employee: To enable set to [(4,ref('access group name')] -->
+<record id="base.menu_custom" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ ref('disable_apps.Menu_Control_Zergaw')])]"/>
+</record>
+
+         <!-- Disable Language Translation Menu for Customer Admin, HR, and Employee: To enable set to [(4,ref('access group name')]-->
+<record id="base.menu_translation" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ ref('disable_apps.Menu_Control_Zergaw')])]"/>
+</record>
+
+         <!-- Disable General Settings Menu for Customer HR and Employee: To enable set to [(4,ref('access group name')]-->
+<record id="base.menu_config" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ ref('disable_apps.Menu_Control_Zergaw'),ref('disable_apps.Group_Control_Customer_Admin')])]"/>
+</record>
+
+         <!-- Disable General Settings Menu for Customer HR and Employee given "Administration/Settings config": To enable set to [(4,ref('access group name')]-->
+<record id="base_setup.menu_config" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ ref('disable_apps.Menu_Control_Zergaw')])]"/>
+</record>
+
+             <!-- Disable Users for Customer Employee: To enable set to [(4,ref('access group name')]-->
+<record id="base.menu_users" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ ref('disable_apps.Menu_Control_Zergaw'),ref('disable_apps.Group_Control_Customer_Admin'),ref('disable_apps.Group_Control_Customer_HR')])]"/>
+</record>
+
+</odoo>

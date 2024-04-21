@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem id="UL_main_menu" name="User Limit" web_icon="user_limit,static/description/limit.png" />
+    <record id="menu_for_ul" model="ir.actions.act_window">
+        <field name="name">Limit Users</field>
+        <field name="res_model">ui.user.limit</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem id="UL_view"
+              name="Configure User Limit"
+              parent="UL_main_menu"
+              action="menu_for_ul"/>
+                     <!-- Disable Users for Customer Employee: To enable set to [(4,ref('access group name')]-->
+<record id="UL_main_menu" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6, 0, [ ref('User_Limit_Control_Zergaw')])]"/>
+</record>
+</odoo>
