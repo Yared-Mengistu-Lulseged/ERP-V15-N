@@ -38,17 +38,24 @@
 
                             </group>
                             <group name="group_general" string="Sale Price Calculator" >
-                                <field name="exchange_rate" />
-                                <field name="fob_usd" />
-                                <field name="fob_etb" />
-                                <field name="freight_cost_usd" />
-                                <field name="freight_cost_etb" />
-                                <field name="total_tax" />
-                                <field name="total_tax_etb" />
-                                <field name="standard_price_usd" />
-                                <field name="profit_usd" />
-                                <field name="profit" />
-                                <field name="sales_price_etb" />
+                                <group name="Input" string="Input">
+                                    <field name="exchange_rate" />
+                                    <field name="fob_usd" />
+                                    <field name="freight_cost_usd" />
+                                    <field name="other_cost" />
+                                    <field name="total_tax_etb" />
+                                    <field name="admin_cost" />
+                                    <field name="profit" />
+                                </group>
+                                <group>
+                                    <group name="Result" string="Result">
+                                        <field name="fob_etb" />
+                                        <field name="freight_cost_etb" />
+                                        <field name="direct_cost" />
+                                        <field name="standard_price_etb" />
+                                        <field name="sales_price_etb" />
+                                    </group>
+                                </group>
 <!--                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>-->
 
                             </group>
@@ -121,11 +128,9 @@
                         <field name="fob_etb" optional="hide"/>
                         <field name="freight_cost_usd" optional="hide"/>
                         <field name="freight_cost_etb" optional="hide"/>
-                        <field name="total_tax" optional="hide"/>
                         <field name="total_tax_etb" optional="hide"/>
-                        <field name="standard_price_usd" optional="hide"/>
+                        <field name="standard_price_etb" optional="hide"/>
                         <field name="standard_price" optional="hide"/>
-                        <field name="profit_usd" optional="hide"/>
                         <field name="profit" optional="hide"/>
                         <field name="exchange_rate" optional="hide"/>
                         <field name="sales_price_etb" optional="hide"/>
@@ -202,19 +207,19 @@
             </field>
         </record>
 
-<!--        search field-->
-<!--        <record id="product_template_search_inherit" model="ir.ui.view">-->
-<!--            <field name="name">product.template.search.inherited</field>-->
-<!--            <field name="model">product.template</field>-->
-<!--            <field name="inherit_id" ref="product.product_template_search_view"/>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <xpath expr="//search" position="inside">-->
-<!--                    <filter string="Free" name="services" domain="[('uint_status','=','Free')]"/>-->
-<!--                    <filter string="Sold" name="services" domain="[('uint_status','=','Sold')]"/>-->
-<!--                    <filter string="Reserved" name="services" domain="[('uint_status','=','Reserved')]"/>-->
-<!--                </xpath>-->
+        search field
+        <record id="product_template_search_inherit" model="ir.ui.view">
+            <field name="name">product.template.search.inherited</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <field name="part_number"/>
+                    <field name="vin"/>
+                    <field name="manufacturer"/>
+                </xpath>
 
-<!--            </field>-->
-<!--        </record>-->
+            </field>
+        </record>
     </data>
 </odoo>
