@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+     <record id="User_Limit_Control_Zergaw" model="res.groups">
+         <field name="name">UL Zergaw</field>
+         <field name="category_id" ref="base.module_category_hidden"/>
+         <field name="implied_ids" eval="[(4,ref('base.group_no_one'))]"/>
+         <field name="users" eval="[(4,ref('base.user_admin'))]"/>
+     </record>
+
+<data noupdate="1">
+        <data>
+            <record id="Default_User_Size" model="ui.user.limit">
+            <field name="Allowed_Users">10</field>
+            <field name="Granted_for">Default Customer</field>
+            <field name="Granted_Time" eval="DateTime.today().strftime('%Y-%m-%d %H:%M')"/>
+            </record>
+        </data>
+</data>
+</odoo>
