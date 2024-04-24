@@ -34,7 +34,6 @@
                                 <field name="year" />
                                 <field name="weight"/>
                                 <field name="volume"/>
-
                             </group>
                             <group name="group_general" string="Sale Price Calculator" >
                                 <group name="Input" string="Input">
@@ -55,11 +54,7 @@
                                         <field name="sales_price_etb" />
                                     </group>
                                 </group>
-<!--                                <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>-->
-
                             </group>
-
-
                         </group>
                         <group>
                             <group name="group_standard_price" string="Sales unit Price" >
@@ -115,7 +110,7 @@
                         <field name="model"/>
                         <field name="year" />
                         <field name="weight"/>
-                        <field name="volume"/>
+                        <field name="volume" optional="hide"/>
                         <field name="list_price" string="Sales Price" widget='monetary' options="{'currency_field': 'currency_id'}" optional="show" decoration-muted="not sale_ok"/>
                         <field name="standard_price" widget='monetary' options="{'currency_field': 'cost_currency_id'}" optional="hide" readonly="1"/>
                         <field name="categ_id" optional="hide"/>
@@ -144,105 +139,48 @@
             <field name="model">product.template</field>
             <field name="inherit_id" ref="product.product_template_kanban_view"/>
             <field name="arch" type="xml">
-                <xpath expr="//kanban" position="replace">
-                    <kanban sample="1">
-
-                        <field name="id"/>
-                        <field name="product_variant_count"/>
-                        <field name="currency_id"/>
-                        <field name="activity_state"/>
-                        <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
-                        <templates>
-                            <t t-name="kanban-box">
-                                <div class="oe_kanban_card oe_kanban_global_click">
-                                    <div class="o_kanban_image mr-1">
-                                        <img t-att-src="kanban_image('product.template', 'image_128', record.id.raw_value)" alt="Product" class="o_image_64_contain"/>
-                                    </div>
-                                    <div class="oe_kanban_details">
-                                        <div class="o_kanban_record_top mb-0">
-                                            <div class="o_kanban_record_headings">
-                                                <strong class="o_kanban_record_title">
-                                                    <field name="name"/>
-                                                </strong>
-                                            </div>
-                                            <field name="priority" widget="priority"/>
-                                        </div>
-                                        <t t-if="record.default_code.value">[<field name="default_code"/>]</t>
-                                        <div t-if="record.product_variant_count.value &gt; 1" groups="product.group_product_variant">
-                                            <strong>
-                                                <t t-esc="record.product_variant_count.value"/> Variants
-                                            </strong>
-                                        </div>
-                                        <div name="product_lst_price" class="mt-1">
-                                            Price: <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"></field>
-                                        </div>
-                                    </div>
-                                </div>
-                            </t>
-                        </templates>
-            </kanban>
+                <xpath expr="//field[@name='priority']" position="attributes">
+                    <attribute name="invisible">1</attribute>
                 </xpath>
-
-
-<!--                <xpath expr="//div[@class='oe_kanban_card oe_kanban_global_click']" position="replace">-->
-<!--                    <div class="oe_kanban_card oe_kanban_global_click">-->
-<!--                        <div class="o_kanban_image mr-1">-->
-<!--                            <img t-att-src="kanban_image('product.template', 'image_128', record.id.raw_value)" alt="Product" class="o_image_64_contain"/>-->
-<!--                        </div>-->
-
-<!--                        <div class="oe_kanban_details">-->
-<!--                            <div class="o_kanban_record_top mb-0">-->
-<!--                                <div class="o_kanban_record_headings">-->
-<!--                                    <strong class="o_kanban_record_title"  style="margin-right: 5px; font-weight: bold; color: purple;">-->
-<!--                                        <field name="name" style="margin-right: 5px; font-weight: bold; color: purple;"/>-->
-<!--                                    </strong>-->
-<!--                                </div>-->
-<!--                                <strong style="color: orange;">-->
-<!--                                    <field name="default_code" />-->
-<!--                                </strong>-->
-
-<!--                            </div>-->
-<!--&lt;!&ndash;                            <t t-if="record.default_code.value">[<field name="default_code"/>]</t>&ndash;&gt;-->
-
-<!--                            <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">-->
-<!--                                <span class="fa fa-building mr-2" aria-label="Manufacturer" title="Manufacturer" style="color: purple;" ></span>-->
-<!--                                <span class="o_form_label" style="margin-right: 5px; font-weight: bold;  color: Light blue;">Manufacturer:</span>-->
-<!--                                <field name="manufacturer" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />-->
-<!--                            </span>-->
-<!--                            <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">-->
-<!--                                <span class="fa fa-cogs mr-2" aria-label="VIN Number" title="VIN Number" style="color: purple;" ></span>-->
-<!--                                <span class="o_form_label" style="margin-right: 5px; font-weight: bold;  color: Light blue;">VIN Number:</span>-->
-<!--                                <field name="vin" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />-->
-<!--                            </span>-->
-
-<!--                            <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">-->
-<!--                                <span class="fa fa-car mr-2" aria-label="Model" title="Model:" style="color: purple;"></span>-->
-<!--                                <span class="o_form_label" style="margin-right: 5px; font-weight: bold; ">Model:</span>-->
-<!--                                <field name="model" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />-->
-<!--                            </span>-->
-<!--                            <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">-->
-<!--                                <span class="fa fa-id-card-o mr-2" aria-label="Part Number" title="TPart Number:" style="color: purple;"></span>-->
-<!--                                <span class="o_form_label" style="margin-right: 5px; font-weight: bold; color: Light blue;">Part Number:</span>-->
-<!--                                <field name="part_number" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />-->
-<!--                            </span>-->
-<!--                            <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">-->
-<!--                                <span class="fa fa-calendar mr-2" aria-label="year" title="year:" style="color: purple;"></span>-->
-<!--                                <span class="o_form_label" style="margin-right: 5px; font-weight: bold; color: Light blue;">year:</span>-->
-<!--                                <field name="year" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />-->
-<!--                            </span>-->
-
-<!--&lt;!&ndash;                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>&ndash;&gt;-->
-<!--                            <div t-if="record.product_variant_count.value &gt; 1" groups="product.group_product_variant">-->
-<!--                                <strong>-->
-<!--                                    <t t-esc="record.product_variant_count.value"/> Variants-->
-<!--                                </strong>-->
-<!--                            </div>-->
-<!--                            <div name="product_lst_price" class="fa fa-usd mt-1" style="color: purple;">-->
-<!--                                Price: <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"></field>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </xpath>-->
+                <xpath expr="//div[contains(@class, 'o_kanban_record_headings')]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//div[@name='product_lst_price']" position="before">
+                    <div class="oe_kanban_details">
+                            <div class="o_kanban_record_top_edit mb-0">
+                                <div class="o_kanban_record_headings_edit">
+                                    <strong class="o_kanban_record_title"  style="margin-right: 5px; font-weight: bold; color: purple;">
+                                        <field name="name" style="margin-right: 5px; font-weight: bold; color: purple;"/>
+                                    </strong>
+                                </div>
+                            </div>
+                            <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                                <span class="fa fa-building mr-2" aria-label="Manufacturer" title="Manufacturer" style="color: purple;" ></span>
+                                <span class="o_form_label" style="margin-right: 5px; font-weight: bold;  color: Light blue;">Manufacturer:</span>
+                                <field name="manufacturer" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                            </span>
+                            <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                                <span class="fa fa-cogs mr-2" aria-label="VIN Number" title="VIN Number" style="color: purple;" ></span>
+                                <span class="o_form_label" style="margin-right: 5px; font-weight: bold;  color: Light blue;">VIN Number:</span>
+                                <field name="vin" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                            </span>
+                            <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                                <span class="fa fa-car mr-2" aria-label="Model" title="Model:" style="color: purple;"></span>
+                                <span class="o_form_label" style="margin-right: 5px; font-weight: bold; ">Model:</span>
+                                <field name="model" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                            </span>
+                            <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                                <span class="fa fa-id-card-o mr-2" aria-label="Part Number" title="TPart Number:" style="color: purple;"></span>
+                                <span class="o_form_label" style="margin-right: 5px; font-weight: bold; color: Light blue;">Part Number:</span>
+                                <field name="part_number" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                            </span>
+                            <span class="o_text_overflow text-muted" style="display: inline-block; margin-bottom: 5px;">
+                                <span class="fa fa-calendar mr-2" aria-label="year" title="year:" style="color: purple;"></span>
+                                <span class="o_form_label" style="margin-right: 5px; font-weight: bold; color: Light blue;">year:</span>
+                                <field name="year" style="border: 1px solid #ccc; padding: 3px 5px; border-radius: 3px; width: 150px;" />
+                            </span>
+                        </div>
+                </xpath>
             </field>
         </record>
 
