@@ -28,6 +28,10 @@ class LeadUpdate(models.Model):
         'res.users', string='Tele Marketer', default=lambda self: self.env.user,
         domain="['&', ('share', '=', False), ('company_ids', 'in', user_company_ids)]",
         check_company=True, index=True, tracking=True)
+    surveyor = fields.Many2one(
+        'res.users', string='Surveyor', default=lambda self: self.env.user,
+        domain="['&', ('share', '=', False), ('company_ids', 'in', user_company_ids)]",
+        check_company=True, index=True, tracking=True)
 
 
 
