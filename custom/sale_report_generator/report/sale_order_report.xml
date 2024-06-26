@@ -59,7 +59,9 @@
                             <th class="text-left">Sale</th>
                             <th colspan="6" class="text-center">Date Order</th>
                             <th colspan="6" class="text-right">Customer</th>
+                             <th colspan="6" class="text-right">Location</th>
                             <th colspan="6" class="text-right">Sales Person</th>
+                            <th colspan="6" class="text-center">Price Type</th>
                             <th colspan="6" class="text-center">Total Qty</th>
                             <th colspan="6" class="text-left">Amount Total</th>
                         </tr>
@@ -77,7 +79,13 @@
                                     <span t-esc="main['customer']"/>
                                 </td>
                                 <td colspan="6">
+                                    <span t-esc="main['warehouse']"/>
+                                </td>
+                                <td colspan="6">
                                     <span t-esc="main['sales_man']"/>
+                                </td>
+                                <td colspan="6">
+                                    <span t-esc="main['pricelist_name']"/>
                                 </td>
                                 <td colspan="6">
                                     <span t-esc="main['sum']"/>
@@ -135,13 +143,14 @@
                             <th>Sale</th>
                             <th colspan="6">Date Order</th>
                             <th colspan="6">Customer</th>
-                            <th colspan="6">Company</th>
+                            <th colspan="6">Location</th>
                             <th colspan="6">Sales Person</th>
                             <th colspan="6">Product Name</th>
                             <th colspan="6">Product Code</th>
                             <th colspan="6">Quantity</th>
+                            <th colspan="6">Price Type</th>
                             <th colspan="6">Price Subtotal</th>
-                            <th colspan="6">Amount Total</th>
+<!--                            <th colspan="6">Amount Total</th>-->
                         </tr>
                     </thead>
                     <tbody>
@@ -157,7 +166,7 @@
                                     <span t-esc="main['customer']"/>
                                 </td>
                                 <td colspan="6">
-                                    <span t-esc="main['company']"/>
+                                    <span t-esc="main['warehouse']"/>
                                 </td>
                                 <td colspan="6">
                                     <span t-esc="main['salesman']"/>
@@ -169,14 +178,17 @@
                                     <span t-esc="main['default_code']"/>
                                 </td>
                                 <td colspan="6">
+                                    <span t-esc="main['pricelist_name']"/>
+                                </td>
+                                <td colspan="6">
                                     <span t-esc="main['product_uom_qty']"/>
                                 </td>
                                 <td colspan="6">
                                     <span t-esc="main['price_subtotal']"/>
                                 </td>
-                                <td colspan="6">
+                                <!-- <td colspan="6">
                                     <span t-esc="main['price_total']"/>
-                                </td>
+                                </td> -->
                             </tr>
 
                         </t>

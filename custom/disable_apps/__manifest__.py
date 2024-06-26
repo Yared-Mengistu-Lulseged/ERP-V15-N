@@ -3,19 +3,18 @@
     'name': "disable_apps",
 
     'summary': """
-        Zergaw's admin privilage configuration for ERP deployment""",
+         admin privilage configuration for ERP deployment""",
 
     'description': """
-        Configures menu visibility for customer and Zergaw's admin
+        Configures menu visibility for customer and admin
     """,
 
-    'author': "Zergaw",
-    'website': "https://www.zergaw.com",
+
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
-    'category': 'Zergaw Customs/Disable menus',
+    'category': 'Customs/Disable menus',
     'version': '15.0.1.0.0',
     'license': 'AGPL-3',
     'installable': True,
