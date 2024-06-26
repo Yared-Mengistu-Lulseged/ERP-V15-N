@@ -131,6 +131,8 @@ class SaleReportGenerator(models.Model):
                             so.amount_total,
                             so.user_id,
                             res_partner.name AS customer,
+                            product_pricelist.name AS pricelist_name,
+                            stock_warehouse.name as warehouse,
                             res_users.partner_id AS user_partner,
                             so.id AS id,
                             SUM(sale_order_line.product_uom_qty),
@@ -145,6 +147,10 @@ class SaleReportGenerator(models.Model):
                             res_users ON so.user_id = res_users.id
                         INNER JOIN 
                             sale_order_line ON so.id = sale_order_line.order_id
+                        INNER JOIN 
+                            product_pricelist ON so.pricelist_id = product_pricelist.id
+                        INNER JOIN 
+                            stock_warehouse ON so.warehouse_id = stock_warehouse.id
                         WHERE 
                             so.state = 'sale'
                      '''
@@ -155,7 +161,7 @@ class SaleReportGenerator(models.Model):
             if data.get('date_to'):
                 query += term + "so.date_order <= '%s' " % data.get('date_to')
             query += "GROUP BY so.user_id, res_users.partner_id, res_partner.name, so.partner_id, so.date_order, " \
-                     "so.name, so.amount_total, so.id"
+                     "so.name, so.amount_total, so.id, product_pricelist.name, stock_warehouse.name"
             self._cr.execute(query)
             report_by_order = self._cr.dictfetchall()
             report_sub_lines.append(report_by_order)
@@ -173,6 +179,8 @@ class SaleReportGenerator(models.Model):
                             so_line.product_uom_qty,
                             so_line.price_subtotal,
                             so_line.price_total,
+                            product_pricelist.name AS pricelist_name,
+                            stock_warehouse.name as warehouse,
                             so.amount_total,
                             so.partner_id,
                             so.user_id,
@@ -198,6 +206,10 @@ class SaleReportGenerator(models.Model):
                             res_company AS rc ON so.company_id = rc.id
                        INNER JOIN 
                             res_users AS ru ON so.user_id = ru.id
+                       INNER JOIN 
+                            product_pricelist ON so.pricelist_id = product_pricelist.id
+                       INNER JOIN 
+                            stock_warehouse ON so.warehouse_id = stock_warehouse.id
                        WHERE 
                             so.state = 'sale'
                     '''
@@ -219,6 +231,8 @@ class SaleReportGenerator(models.Model):
                             so_line.product_uom_qty,
                             so_line.price_subtotal,
                             so_line.price_total,
+                            product_pricelist.name,
+                            warehouse,
                             so.amount_total,
                             so.partner_id,
                             so.user_id,
@@ -427,6 +441,7 @@ class SaleReportGenerator(models.Model):
             sheet.write('D7', 'Sales Person', heading)
             sheet.write('E7', 'Total Qty', heading)
             sheet.write('F7', 'Amount Total', heading)
+            sheet.write('G7', 'Price Type', heading)
 
             lst = []
             for rec in report_data_main[0]:
@@ -439,6 +454,7 @@ class SaleReportGenerator(models.Model):
             sheet.set_column(6, 3, 15)
             sheet.set_column(7, 4, 15)
             sheet.set_column(8, 5, 15)
+            sheet.set_column(9, 6, 15)
 
             for rec_data in report_data_main:
                 one_lst = []
@@ -450,6 +466,7 @@ class SaleReportGenerator(models.Model):
                 sheet.write(row, col + 3, rec_data['sales_man'], txt_l)
                 sheet.write(row, col + 4, rec_data['sum'], txt_l)
                 sheet.write(row, col + 5, rec_data['amount_total'], txt_l)
+                sheet.write(row, col + 6, rec_data['pricelist_name'], txt_l)
 
         if filters.get('report_type') == 'report_by_order_detail':
 
@@ -459,13 +476,13 @@ class SaleReportGenerator(models.Model):
             sheet.write('A7', 'Sale', heading)
             sheet.write('B7', 'Date Order', heading)
             sheet.write('C7', 'Customer', heading)
-            sheet.write('D7', 'Company', heading)
+            sheet.write('D7', 'Loaction', heading)
             sheet.write('E7', 'Sales Person', heading)
             sheet.write('F7', 'Product Name', heading)
             sheet.write('G7', 'Product Code', heading)
             sheet.write('H7', 'Quantity', heading)
             sheet.write('I7', 'Price Subtotal', heading)
-            sheet.write('J7', 'Amount Total', heading)
+            sheet.write('J7', 'Price Type', heading)
 
             lst = []
             for rec in report_data_main[0]:
@@ -490,13 +507,13 @@ class SaleReportGenerator(models.Model):
                 sheet.write(row, col, rec_data['number'], txt_l)
                 sheet.write(row, col + 1, rec_data['date_order'], txt_l)
                 sheet.write(row, col + 2, rec_data['customer'], txt_l)
-                sheet.write(row, col + 3, rec_data['company'], txt_l)
+                sheet.write(row, col + 3, rec_data['warehouse'], txt_l)
                 sheet.write(row, col + 4, rec_data['salesman'], txt_l)
                 sheet.write(row, col + 5, rec_data['product'], txt_l)
                 sheet.write(row, col + 6, rec_data['default_code'], txt_l)
                 sheet.write(row, col + 7, rec_data['product_uom_qty'], txt_l)
                 sheet.write(row, col + 8, rec_data['price_subtotal'], txt_l)
-                sheet.write(row, col + 9, rec_data['amount_total'], txt_l)
+                sheet.write(row, col + 9, rec_data['pricelist_name'], txt_l)
 
         if filters.get('report_type') == 'report_by_product':
 

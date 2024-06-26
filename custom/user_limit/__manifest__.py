@@ -3,20 +3,20 @@
     'name': "user_limit",
 
     'summary': """
-        Zergaw's number of user limit app""",
+        number of user limit app""",
 
     'description': """
         Limit customer users based on available resources
     """,
 
-    'author': "Zergaw",
-    'website': "https://zergaw.com/",
+    'author': "yo",
+
 
 
     # Categories can be used to filter modules in modules listing
     # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
     # for the full list
-    'category': 'Zergaw Customs/Limit User',
+    'category': 'Customs/Limit User',
     'version': '15.0.1.0.0',
 
     # any module necessary for this one to work correctly
